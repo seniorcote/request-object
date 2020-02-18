@@ -1,0 +1,38 @@
+{
+    "name": "seniorcote/request-object",
+    "description": "",
+    "type": "library",
+    "version": "0.0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeny Kotov",
+            "email": "dev@seniorcote.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-json": "*",
+        "symfony/http-foundation": "^4.3|^5.0",
+        "symfony/validator": "^4.3|^5.0",
+        "symfony/property-info": "^4.3|^5.0",
+        "doctrine/annotations": "^1.8",
+        "symfony/http-kernel": "^4.3|^5.0",
+        "symfony/yaml": "^5.0"
+    },
+    "require-dev": {
+        "symfony/framework-bundle": "^4.3|^5.0",
+        "symfony/var-dumper": "^4.3|^5.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Seniorcote\\RequestObject\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Seniorcote\\RequestObject\\Examples\\": "examples/"
+        }
+    }
+}

@@ -1,0 +1,4 @@
+test:
+    path: /test
+    defaults:
+        _controller: 'app_controller:test'

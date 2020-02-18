@@ -1,0 +1,14 @@
+framework:
+    router:
+        resource: '%kernel.project_dir%/examples/App/routing.yaml'
+        strict_requirements: ~
+
+services:
+    app_controller:
+        class: Seniorcote\RequestObject\Examples\App\AppController
+        public: true
+        tags: ['controller.service_arguments']
+        calls: [[setContainer, ['@service_container']]]
+    Seniorcote\RequestObject\Examples\Request\:
+        resource: '../Request'
+        public: true
