@@ -109,7 +109,6 @@ public function create(SomeRequestObject $request)
 If you want the controller to return a response containing validation errors, subscribe to the ValidationException and build the response you need:
 
 ```php
-
 ```
 
 ## TODO
