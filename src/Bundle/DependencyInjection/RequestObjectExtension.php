@@ -7,6 +7,7 @@ namespace Seniorcote\RequestObject\Bundle\DependencyInjection;
 use Seniorcote\RequestObject\Bundle\ControllerArgumentsSubscriber;
 use Seniorcote\RequestObject\RequestObjectBuilder;
 use Seniorcote\RequestObject\DefaultValidationErrorsResponse;
+use Seniorcote\RequestObject\TypeConverter;
 use Seniorcote\RequestObject\ValidationErrorsResponse;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -28,6 +29,7 @@ final class RequestObjectExtension extends Extension
         $this->registerControllerArgumentsSubscriber($container);
         $this->registerRequestBuilder($container);
         $this->registerValidationErrorsResponse($container);
+        $this->registerTypeConverter($container);
     }
 
     /**
@@ -73,5 +75,16 @@ final class RequestObjectExtension extends Extension
         $container->setDefinition('request_object.validation_errors_response.default', $implementationDefinition);
 
         $container->setAlias(ValidationErrorsResponse::class, 'request_object.validation_errors_response.default');
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     */
+    private function registerTypeConverter(ContainerBuilder $container): void
+    {
+        $definition = new Definition(TypeConverter::class);
+
+        $container->setDefinition('request_object.type_converter', $definition);
+        $container->setAlias(TypeConverter::class, 'request_object.type_converter');
     }
 }

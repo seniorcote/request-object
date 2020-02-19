@@ -8,9 +8,9 @@ use Doctrine\Common\Annotations\AnnotationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Seniorcote\RequestObject\Annotation\Files;
 use Seniorcote\RequestObject\Annotation\QueryParam;
+use Seniorcote\RequestObject\Exception\TypeConversionException;
 use Seniorcote\RequestObject\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -24,24 +24,31 @@ final class RequestObjectBuilder
     private $validator;
 
     /**
+     * @var TypeConverter
+     */
+    private $typeConverter;
+
+    /**
      * RequestObjectBuilder constructor.
      *
      * @param ValidatorInterface $validator
+     * @param TypeConverter      $typeConverter
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validator, TypeConverter $typeConverter)
     {
         $this->validator = $validator;
+        $this->typeConverter = $typeConverter;
     }
 
     /**
      * @param Request       $request
      * @param RequestObject $requestObject
      *
-     * @return RequestObject|Response
+     * @return RequestObject
      *
-     * @throws \ReflectionException|AnnotationException|ValidationException
+     * @throws \ReflectionException|AnnotationException|ValidationException|TypeConversionException
      */
-    public function build(Request $request, RequestObject $requestObject)
+    public function build(Request $request, RequestObject $requestObject): RequestObject
     {
         $reflectionClass = new \ReflectionClass(get_class($requestObject));
         $properties = $reflectionClass->getProperties();
@@ -73,6 +80,10 @@ final class RequestObjectBuilder
 
                         unset($request->query->all()[$queryItemKey], $properties[$propertyKey]);
                     }
+
+                    //if ($annotation instanceof Type) {
+                    //    $value = $this->typeConverter->convert($queryItemValue, $annotation->type);
+                    //}
                 }
             }
         }

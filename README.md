@@ -17,11 +17,10 @@ declare(strict_types=1);
 
 namespace App\Request;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 use Seniorcote\RequestObject\RequestObject;
-use Seniorcote\RequestObject\Annotation\QueryParam;
-use Seniorcote\RequestObject\Annotation\Files;
-use Seniorcote\RequestObject\Annotation\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;use Symfony\Component\Validator\Constraints as Assert;
+use Seniorcote\RequestObject\Annotation as RO;
 
 final class SomeRequestObject implements RequestObject
 {
@@ -30,6 +29,8 @@ final class SomeRequestObject implements RequestObject
      *
      * @Assert\NotNull()
      * @Assert\Type("integer")
+     * 
+     * @RO\Type(type="integer") 
      */
     public $foo;
 
@@ -39,16 +40,19 @@ final class SomeRequestObject implements RequestObject
      * @Assert\NotNull()
      * @Assert\Type("string")
      * @Assert\Choice(callback={"App\Enum\SomeType", "getValues"})
+     * 
+     * @RO\Type(type="string") 
      */
     public $bar;
     
     /**
      * @var string
      * 
-     * @QueryParam(name="baz")
-     * 
      * @Assert\NotNull()
      * @Assert\Type("string")
+     * 
+     * @RO\QueryParam(name="baz")
+     * @RO\Type(type="string") 
      */
     public $baz;
 
@@ -58,29 +62,31 @@ final class SomeRequestObject implements RequestObject
      * @Assert\NotNull()
      * @Assert\NotBlank()
      * @Assert\Date()
+     * 
+     * @RO\Type(type="datetime") 
      */
     public $date;
 
     /**
      * @var UploadedFile
      * 
-     * @File(key="image")
-     * 
      * @Assert\File(
      *     maxSize="2M",
      *     mimeTypes={"image/jpeg", "image/png"}
      * )
+     * 
+     * @RO\File(key="image")
      */
     public $image;
 
     /**
      * @var UploadedFile[]
      * 
-     * @Files()
-     * 
      * @Assert\All({
      *     @Assert\File(maxSize="2M", mimeTypes={"image/*"})    
      * })
+     * 
+     * @RO\Files()
      */
     public $files;
 }
