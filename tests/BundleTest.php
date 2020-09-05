@@ -15,7 +15,7 @@ final class BundleTest extends TestCase
     /**
      * @var AppKernel
      */
-    private $kernel;
+    private AppKernel $kernel;
 
     /**
      * @return void
@@ -33,12 +33,14 @@ final class BundleTest extends TestCase
      */
     public function test(): void
     {
-        $request = Request::create('/test', 'POST', [], [], [], [], json_encode([
+        $request = Request::create('/single-object', 'POST', [], [], [], [], json_encode([
             'firstName' => 'John',
             'lastName' => 'Doe',
             'email' => 'john@doe.com',
             'password' => 'secret',
-        ]));
+            'age' => 20,
+            'array' => [0, 1, 2, 3],
+        ], JSON_THROW_ON_ERROR, 512));
 
         $response = $this->kernel->handle($request);
 

@@ -1,6 +1,6 @@
 {
     "name": "seniorcote/request-object",
-    "description": "",
+    "description": "Convenient validated request objects for Symfony.",
     "type": "library",
     "version": "0.0.1",
     "license": "MIT",

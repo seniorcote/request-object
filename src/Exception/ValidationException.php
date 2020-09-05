@@ -4,51 +4,33 @@ declare(strict_types=1);
 
 namespace Seniorcote\RequestObject\Exception;
 
-use Seniorcote\RequestObject\RequestObject;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
-
 /**
  * Class ValidationException.
  */
 class ValidationException extends \Exception
 {
     /**
-     * @var RequestObject
+     * @var array
      */
-    private $requestObject;
-
-    /**
-     * @var ConstraintViolationListInterface
-     */
-    private $constraintViolationList;
+    private array $violations;
 
     /**
      * ValidationException constructor.
      *
-     * @param RequestObject                    $requestObject
-     * @param ConstraintViolationListInterface $constraintViolationList
+     * @param array $violations
      */
-    public function __construct(RequestObject $requestObject, ConstraintViolationListInterface $constraintViolationList)
+    public function __construct(array $violations)
     {
         parent::__construct();
 
-        $this->requestObject = $requestObject;
-        $this->constraintViolationList = $constraintViolationList;
+        $this->violations = $violations;
     }
 
     /**
-     * @return RequestObject
+     * @return array
      */
-    public function getRequestObject(): RequestObject
+    public function getViolations(): array
     {
-        return $this->requestObject;
-    }
-
-    /**
-     * @return ConstraintViolationListInterface
-     */
-    public function getConstraintViolationList(): ConstraintViolationListInterface
-    {
-        return $this->constraintViolationList;
+        return $this->violations;
     }
 }

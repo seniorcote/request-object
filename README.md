@@ -116,3 +116,9 @@ If you want the controller to return a response containing validation errors, su
 - tests
 - type cast
 - nested objects parsing
+
+- ControllerArgumentsSubscriber > requestObjectBuilder->build(request, empty request object)
+- ControllerArgumentsSubscriber < requestObject
+- validate request object
+    - throw validation exception
+    - valid request object

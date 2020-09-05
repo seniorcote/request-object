@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Seniorcote\RequestObject;
 
 /**
- * Interface RequestObject.
+ * Interface RequestObjectFromJson.
  */
-interface RequestObject
+interface RequestObjectFromJson
 {
 }

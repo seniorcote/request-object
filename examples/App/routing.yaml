@@ -1,4 +1,9 @@
-test:
-    path: /test
+singleObject:
+    path: /single-object
     defaults:
-        _controller: 'app_controller:test'
+        _controller: 'app_controller:singleObject'
+
+nestedObjects:
+    path: /nested-objects
+    defaults:
+        _controller: 'app_controller:nestedObjects'
