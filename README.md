@@ -11,50 +11,35 @@ composer require seniorcote/request-object
 Create request object like this:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-namespace App\Request;
-
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints as Assert;
-use Seniorcote\RequestObject\RequestObject;
-use Seniorcote\RequestObject\Annotation as RO;
-
-final class SomeRequestObject implements RequestObject
+final class SomeRequestObject implements RequestObjectFromJson
 {
     /**
      * @var int
      *
      * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @Assert\Type("integer")
-     * 
-     * @RO\Type(type="integer") 
      */
-    public $foo;
+    public int $foo;
 
     /**
      * @var string
      *
      * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @Assert\Type("string")
      * @Assert\Choice(callback={"App\Enum\SomeType", "getValues"})
-     * 
-     * @RO\Type(type="string") 
      */
-    public $bar;
+    public string $bar;
     
     /**
      * @var string
      * 
      * @Assert\NotNull()
+     * @Assert\NotBlank()
      * @Assert\Type("string")
-     * 
-     * @RO\QueryParam(name="baz")
-     * @RO\Type(type="string") 
      */
-    public $baz;
+    public string $baz;
 
     /**
      * @var \DateTimeImmutable
@@ -62,33 +47,17 @@ final class SomeRequestObject implements RequestObject
      * @Assert\NotNull()
      * @Assert\NotBlank()
      * @Assert\Date()
-     * 
-     * @RO\Type(type="datetime") 
      */
-    public $date;
+    public \DateTimeImmutable $date;
 
     /**
-     * @var UploadedFile
-     * 
-     * @Assert\File(
-     *     maxSize="2M",
-     *     mimeTypes={"image/jpeg", "image/png"}
-     * )
-     * 
-     * @RO\File(key="image")
-     */
-    public $image;
-
-    /**
-     * @var UploadedFile[]
+     * @var array|UploadedFile[]
      * 
      * @Assert\All({
      *     @Assert\File(maxSize="2M", mimeTypes={"image/*"})    
      * })
-     * 
-     * @RO\Files()
      */
-    public $files;
+    public array $files;
 }
 ```
 
@@ -106,19 +75,8 @@ public function create(SomeRequestObject $request)
 }
 ```
 
-If you want the controller to return a response containing validation errors, subscribe to the ValidationException and build the response you need:
-
-```php
-```
-
 ## TODO
 
 - tests
 - type cast
 - nested objects parsing
-
-- ControllerArgumentsSubscriber > requestObjectBuilder->build(request, empty request object)
-- ControllerArgumentsSubscriber < requestObject
-- validate request object
-    - throw validation exception
-    - valid request object
