@@ -30,7 +30,7 @@ final class FromJsonBody implements RequestObjectBuilder
             foreach ($properties as $propertyKey => $propertyValue) {
                 if ($propertyValue->name === $bodyItemKey) {
                     if (method_exists($propertyValue, 'getType')) { // todo: Make types converter as external class.
-                        switch ($propertyValue->getType()) {
+                        switch ((string) $propertyValue->getType()) {
                             case 'string':
                                 $value = (string) $bodyItemValue; break;
                             case 'int':
